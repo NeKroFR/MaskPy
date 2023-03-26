@@ -1,5 +1,5 @@
-import sys
-
+import re
+import sys, random, string
 def gui():
     banner = """\033[92m
   __  __           _    _____       
@@ -36,10 +36,31 @@ def save_file(code, filename):
     f.write(code)
     print("\033[1;32mSuccess:\033[0m the file has been successfully obfuscated")
 
+def randkey(swap):
+    key =''.join(random.choices(string.ascii_lowercase, k=random.randint(6,10)))
+    while key in swap.keys():
+        key =''.join(random.choices(string.ascii_lowercase, k=random.randint(6,10)))
+    return key
 
 def obfuscate(code):
-    # The hard part
-    return str(code)
+    #prendre en compte l'indentation
+    swap = {}
+    obfuscated_code = []
+    for l in code:
+        obf_line = []
+        for word in l.split():
+            if word in swap:
+                obf_line.append(swap[word])
+            else:
+                key = randkey(swap)
+                obf_line.append(key)
+                swap[word] = key
+        obfuscated_code.append(' '.join(obf_line))
+
+    # Reverse keys and values in swap
+    swap = {v: k for k, v in swap.items()}
+    return "import re\nswap ="+str(swap) + '\ncode=  """'+''.join(obfuscated_code)+ '"""'+"\n(lambda: exec(re.compile('|'.join(map(re.escape, swap.keys()))).sub(lambda match: swap[match.group(0)], code)))()"
+
 
 if __name__ == "__main__":
     a = len(sys.argv)
