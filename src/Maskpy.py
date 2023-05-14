@@ -1,5 +1,6 @@
-import re
-import sys, random, string
+import sys
+from functions import obfuscate
+
 def gui():
     banner = """\033[92m
   __  __           _    _____       
@@ -35,41 +36,6 @@ def save_file(code, filename):
     f = open(filename, "w",encoding="utf-8")
     f.write(code)
     print("\033[1;32mSuccess:\033[0m the file has been successfully obfuscated")
-
-def randkey(swap):
-    key =''.join(random.choices(string.ascii_lowercase, k=random.randint(6,10)))
-    while key in swap.keys():
-        key =''.join(random.choices(string.ascii_lowercase, k=random.randint(6,10)))
-    return key
-
-def get_indent(line):
-    indent = ''
-    for chr in line:
-        if chr == " ":
-            indent += chr
-        else:
-            break
-    return indent
-
-
-def obfuscate(code):
-    swap = {}
-    obfuscated_code = []
-    for l in code:
-        obf_line = []
-        for word in l.split():
-            if word in swap:
-                obf_line.append(swap[word])
-            else:
-                key = randkey(swap)
-                obf_line.append(key)
-                swap[word] = key
-        obfuscated_code.append(get_indent(l)+' '.join(obf_line)+"\n")
-
-    swapname = randkey(swap)
-    # Reverse keys and values ​​in swap
-    swap = {v: k for k, v in swap.items()}
-    return "import re\n"+swapname+" ="+str(swap) + '\ncode=  """'+''.join(obfuscated_code)+ '"""'+"\n(lambda: exec(re.compile('|'.join(map(re.escape, "+swapname+".keys()))).sub(lambda match: "+swapname+"[match.group(0)], code)))()"
 
 
 if __name__ == "__main__":
