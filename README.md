@@ -19,17 +19,19 @@ For the moment, i only have one layer wich swap the keywords of the code and i'm
 
 <ins>Before:</ins>
 ```py
-def add(a,b):
-    print(a+b)
-add(1, 1)
+def a(x):
+    for i in range(1,x+1):
+        print(i)
+a(10)
 ```
 <ins>After:</ins>
 ```py
 import re
-brditml ={'jydyjzimyw': 'def', 'wonsfrbwl': 'add(a,b):', 'koidjoxou': 'print(a+b)', 'waufltscsc': 'add(1,', 'zcuroengd': '1)'}
-code=  """jydyjzimyw wonsfrbwl
-    koidjoxou
-waufltscsc zcuroengd
+twcszpdk=(lambda cipher_dict, key: {k: ''.join([chr((ord(v[i]) - ord(key[i % len(key)])) % 256) for i in range(len(v))]) for k, v in cipher_dict.items()})({'auzyhds': 'ÊÌÓ', 'gdcdbjvuv': 'Ç\x8få\x9e³', 'wzrsmqm': 'ÌÖß', 'ndzzmhaon': 'Ï', 'zjlsndzj': 'ÏÕ', 'lhcgaf': 'ØÈÛÜÞ\x8c\x93\x91ã\x96\x97\x97©', 'jdozjpiyp': 'ÖÙÖãí\x8cË\x8e', 'nzkrbkbqcm': 'Ç\x8f\x9e¥¢'},'fgmuydbekkfnowlp')
+ptaxoyryue=  """auzyhds gdcdbjvuv
+    wzrsmqm ndzzmhaon zjlsndzj lhcgaf
+        jdozjpiyp
+nzkrbkbqcm
 """
-(lambda: exec(re.compile('|'.join(map(re.escape, brditml.keys()))).sub(lambda match: brditml[match.group(0)], code)))()
+(lambda: exec(re.compile('|'.join(map(re.escape, twcszpdk.keys()))).sub(lambda match: twcszpdk[match.group(0)], ptaxoyryue)))()
 ```
