@@ -19,13 +19,17 @@ For the moment, i only have one layer wich swap the keywords of the code and i'm
 
 <ins>Before:</ins>
 ```py
-print(1+1)
+def add(a,b):
+    print(a+b)
+add(1, 1)
 ```
 <ins>After:</ins>
 ```py
 import re
-swap ={'osuwtxq': 'print(1+1)'}
-code=  """osuwtxq
+brditml ={'jydyjzimyw': 'def', 'wonsfrbwl': 'add(a,b):', 'koidjoxou': 'print(a+b)', 'waufltscsc': 'add(1,', 'zcuroengd': '1)'}
+code=  """jydyjzimyw wonsfrbwl
+    koidjoxou
+waufltscsc zcuroengd
 """
-(lambda: exec(re.compile('|'.join(map(re.escape, swap.keys()))).sub(lambda match: swap[match.group(0)], code)))()
+(lambda: exec(re.compile('|'.join(map(re.escape, brditml.keys()))).sub(lambda match: brditml[match.group(0)], code)))()
 ```
