@@ -1,25 +1,9 @@
 import re
+fozjeslua ={'ahisgfpw': 'def', 'tfutike': 'a(x):', 'nwpiafqlpb': 'for', 'ieltpc': 'i', 'ptzsnhnhb': 'in', 'sxeyrmcoef': 'range(1,x+1):', 'xmwirm': 'print(i)', 'jvhptiy': 'a(10)'}
+code=  """ahisgfpw tfutike
+    nwpiafqlpb ieltpc ptzsnhnhb sxeyrmcoef
+        xmwirm
 
-code = """
-azeazre ezaezra(azarze):
-    azaezre ezaerza azearze azaerze(1,azarze-1):
-        ezeazra(ezaerza)
-
-ezaezra(10)
+jvhptiy
 """
-swap = {
-    'azeazre' : 'def',
-    'azaezre' : 'for',
-    'azearze' : 'in' ,
-    'azaerze' :'range',
-    'ezeazra' : 'print',
-    'True' : 'False',
-    'False' : 'True',
-    '-' : '+',
-    'ezaezra' : 'a' ,
-    'ezaerza' : 'i' ,
-    'azarze' : 'x'
-}
-
-
-(lambda: exec(re.compile('|'.join(map(re.escape, swap.keys()))).sub(lambda match: swap[match.group(0)], code)))()
+(lambda: exec(re.compile('|'.join(map(re.escape, fozjeslua.keys()))).sub(lambda match: fozjeslua[match.group(0)], code)))()
