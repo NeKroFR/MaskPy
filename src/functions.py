@@ -1,77 +1,98 @@
-import re, random, string
+import re
+import random
+import string
 
-def Vigenere(message, key):
+def Vigenere_cipher(message: str, key: str) -> str:
     """
-    Cipher str using the Vigenere cipher with a fixed key
-    ---
-    In:
-        message <str> to be ciphered + key <str>
-    Out:
-        the ciphered str
+    Apply the Vigenere cipher to a given message using a specific key.
+
+    Parameters:
+        message (str): The message to be ciphered.
+        key (str): The key used in the Vigenere cipher.
+
+    Returns:
+        str: The ciphered message.
     """
-    key_len = len(key)
-    cipher = []
-    for i in range(len(message)):
-        key_c = key[i % key_len]
-        cipher_c = chr((ord(message[i]) + ord(key_c)) % 256)
-        cipher.append(cipher_c)
+    key_length = len(key)
+    cipher = [chr((ord(message[i]) + ord(key[i % key_length])) % 256) for i in range(len(message))]
     return ''.join(cipher)
 
 
-def randkey(swap):
+def generate_unique_key(swap_dict: dict) -> str:
     """
-    generate a random key wich isn't already in the swap dict
+    Generate a random key which doesn't exist in the swap dictionary.
+
+    Parameters:
+        swap_dict (dict): The dictionary to be checked.
+
+    Returns:
+        str: A unique key.
     """
-    key =''.join(random.choices(string.ascii_lowercase, k=random.randint(6,10)))
-    while key in swap.keys():
-        key =''.join(random.choices(string.ascii_lowercase, k=random.randint(6,10)))
+    while True:
+        key = ''.join(random.choices(string.ascii_lowercase, k=random.randint(6, 10)))
+        if key not in swap_dict:
+            break
     return key
 
-def get_indent(line):
+
+def calculate_indentation(line: str) -> str:
     """
-    return code line indent
+    Calculate the indentation of a given line.
+
+    Parameters:
+        line (str): The line whose indentation is to be calculated.
+
+    Returns:
+        str: The indentation of the line.
     """
-    indent = ''
-    for chr in line:
-        if chr == " ":
-            indent += chr
-        else:
-            break
-    return indent
+    return ''.join(ch for ch in line if ch == " ")
 
 
-def ciphkeys(dict: dict):
+def cipher_dictionary_keys(dictionary: dict) -> tuple:
     """
-    Cipher dico values
-    ---
-    In:
-        dict
-    Out:
-        cipher dict, key to  decipher
+    Cipher the keys of a given dictionary.
+
+    Parameters:
+        dictionary (dict): The dictionary whose keys are to be ciphered.
+
+    Returns:
+        tuple: A tuple containing the ciphered dictionary and the key to decipher.
     """
     key = "".join(random.choices(string.ascii_lowercase, k=16))
-    dico = {}
-    for k, v in dict.items():
-        dico[k] = Vigenere(v,key)
-    return dico, key
+    return {k: Vigenere_cipher(v, key) for k, v in dictionary.items()}, key
 
-def obfuscate(code):
-    swap = {}
+
+def obfuscate_code(code: str) -> str:
+    """
+    Obfuscate a given code.
+
+    Parameters:
+        code (str): The code to be obfuscated.
+
+    Returns:
+        str: The obfuscated code.
+    """
+    swap_dict = {}
     obfuscated_code = []
-    for l in code:
-        obf_line = []
-        for word in l.split():
-            if word in swap:
-                obf_line.append(swap[word])
-            else:
-                key = randkey(swap)
-                obf_line.append(key)
-                swap[word] = key
-        obfuscated_code.append(get_indent(l)+' '.join(obf_line)+"\n")
-    swapname = randkey(swap)
-    codename = randkey(swap)
-    while codename == swapname:
-        codename = randkey(swap)
-    # Reverse keys and values ​​in swap + obfuscate the dict values
-    swap, dictkey = ciphkeys({v: k for k, v in swap.items()}) 
-    return "import re\n"+swapname+"=(lambda cipher_dict, key: {k: ''.join([chr((ord(v[i]) - ord(key[i % len(key)])) % 256) for i in range(len(v))]) for k, v in cipher_dict.items()})("+str(swap)+",'"+dictkey+"')\n"+codename+'=  """'+''.join(obfuscated_code)+ '"""'+"\n(lambda: exec(re.compile('|'.join(map(re.escape, "+swapname+".keys()))).sub(lambda match: "+swapname+"[match.group(0)], "+codename+")))()"
+    for line in code:
+        obfuscated_line = []
+        for word in line.split():
+            if word not in swap_dict:
+                swap_dict[word] = generate_unique_key(swap_dict)
+            obfuscated_line.append(swap_dict[word])
+        obfuscated_code.append(calculate_indentation(line) + ' '.join(obfuscated_line) + "\n")
+
+    # Avoid duplicate keys.
+    swap_key, code_key = generate_unique_key(swap_dict), generate_unique_key(swap_dict)
+    while code_key == swap_key:
+        code_key = generate_unique_key(swap_dict)
+
+    # Reverse keys and values ​​in swap_dict + cipher the dictionary values
+    swap_dict, dict_key = cipher_dictionary_keys({v: k for k, v in swap_dict.items()})
+
+    return (
+        f"import re\n"
+        f"{swap_key} = (lambda cipher_dict, key: {{k: ''.join([chr((ord(v[i]) - ord(key[i % len(key)])) % 256) for i in range(len(v))]) for k, v in cipher_dict.items()}})({swap_dict}, '{dict_key}')\n"
+        f"{code_key} =  '''{''.join(obfuscated_code)}'''\n"
+        f"(lambda: exec(re.compile('|'.join(map(re.escape, {swap_key}.keys()))).sub(lambda match: {swap_key}[match.group(0)], {code_key})))()"
+    )
