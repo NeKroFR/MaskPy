@@ -67,7 +67,7 @@ def obfuscate(code):
                 key = randkey(swap)
                 obf_line.append(key)
                 swap[word] = key
-        obfuscated_code.append(get_indent(l)+' '.join(obf_line)+"\n")
+        obfuscated_code.append(get_indent(l)+' '.join(obf_line)+"\\n")
     swapname = randkey(swap)
     codename = randkey(swap)
     while codename == swapname:
