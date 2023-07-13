@@ -27,11 +27,7 @@ a(10)
 <ins>After:</ins>
 ```py
 import re
-twcszpdk=(lambda cipher_dict, key: {k: ''.join([chr((ord(v[i]) - ord(key[i % len(key)])) % 256) for i in range(len(v))]) for k, v in cipher_dict.items()})({'auzyhds': 'ÊÌÓ', 'gdcdbjvuv': 'Ç\x8få\x9e³', 'wzrsmqm': 'ÌÖß', 'ndzzmhaon': 'Ï', 'zjlsndzj': 'ÏÕ', 'lhcgaf': 'ØÈÛÜÞ\x8c\x93\x91ã\x96\x97\x97©', 'jdozjpiyp': 'ÖÙÖãí\x8cË\x8e', 'nzkrbkbqcm': 'Ç\x8f\x9e¥¢'},'fgmuydbekkfnowlp')
-ptaxoyryue=  """auzyhds gdcdbjvuv
-    wzrsmqm ndzzmhaon zjlsndzj lhcgaf
-        jdozjpiyp
-nzkrbkbqcm
-"""
-(lambda: exec(re.compile('|'.join(map(re.escape, twcszpdk.keys()))).sub(lambda match: twcszpdk[match.group(0)], ptaxoyryue)))()
+hgmwtabcm=(lambda cipher_dict, key: {k: ''.join([chr((ord(v[i]) - ord(key[i % len(key)])) % 256) for i in range(len(v))]) for k, v in cipher_dict.items()})({'pwznltyyrk': '×ÍÚ', 'abmjad': 'Ô\x90ì\x9a¬', 'bzqexcy': 'Ù×æ', 'rzfqfe': 'Ü', 'sohgdlrdwh': 'ÜÖ', 'kjmdyibnoz': 'åÉâØ×\x9d\x98\x98ì\x91ª¡\x9d', 'viiizbama': 'ãÚÝßæ\x9dÐ\x95', 'jgucggz': 'Ô\x90¥¡\x9b'},'shtqrugltfyxcbmv')
+cfihjj=  """pwznltyyrk abmjad\n    bzqexcy rzfqfe sohgdlrdwh kjmdyibnoz\n        viiizbama\njgucggz\n"""
+(lambda: exec(re.compile('|'.join(map(re.escape, hgmwtabcm.keys()))).sub(lambda match: hgmwtabcm[match.group(0)], cfihjj)))()
 ```
