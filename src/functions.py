@@ -72,8 +72,10 @@ def obfuscate(code):
     codename = randkey(swap)
     cipher_dict_name = randkey(swap)
     key_name = randkey(swap)
+    compile_name = randkey(swap)
+    escape_name = randkey(swap)
     while codename == swapname:
         codename = randkey(swap)
     # Reverse keys and values ​​in swap + obfuscate the dict values
     swap, dictkey = ciphkeys({v: k for k, v in swap.items()}) 
-    return "import re\n"+swapname+"=(lambda "+cipher_dict_name+", "+key_name+": {k: ''.join([chr((ord(v[i]) - ord("+key_name+"[i % len("+key_name+")])) % 256) for i in range(len(v))]) for k, v in "+cipher_dict_name+".items()})("+str(swap)+",'"+dictkey+"')\n"+codename+'=  """'+''.join(obfuscated_code)+ '"""'+"\n(lambda: exec(re.compile('|'.join(map(re.escape, "+swapname+".keys()))).sub(lambda match: "+swapname+"[match.group(0)], "+codename+")))()"
+    return "from re import compile as "+compile_name+",escape as "+escape_name+"\n"+swapname+"=(lambda "+cipher_dict_name+", "+key_name+": {k: ''.join([chr((ord(v[i]) - ord("+key_name+"[i % len("+key_name+")])) % 256) for i in range(len(v))]) for k, v in "+cipher_dict_name+".items()})("+str(swap)+",'"+dictkey+"')\n"+codename+'=  """'+''.join(obfuscated_code)+ '"""'+"\n(lambda: exec("+compile_name+"('|'.join(map("+escape_name+", "+swapname+".keys()))).sub(lambda match: "+swapname+"[match.group(0)], "+codename+")))()"
