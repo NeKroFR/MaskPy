@@ -26,8 +26,17 @@ a(10)
 ```
 <ins>After:</ins>
 ```py
-import re
-lvqlqu=(lambda jydfivpkn, jbtfkwfur: {k: ''.join([chr((ord(v[i]) - ord(jbtfkwfur[i % len(jbtfkwfur)])) % 256) for i in range(len(v))]) for k, v in jydfivpkn.items()})({'djrkoqhpx': 'ÜÛÒ', 'oratannnek': 'Ù\x9eä¢´', 'zzuwfu': 'ÞåÞ', 'yanalokq': 'á', 'uswonbrvvs': 'áä', 'qwyntpd': 'ê×Úàß\x9b\xa0¥ê¤\x9e¢®', 'zmtopmo': 'èèÕçî\x9bØ¢', 'qitpaotw': 'Ù\x9e\x9d©£'},'xvlyzsoyrymytzvt')
-higmqcsg=  """djrkoqhpx oratannnek\n    zzuwfu yanalokq uswonbrvvs qwyntpd\n        zmtopmo\nqitpaotw\n"""
-(lambda: exec(re.compile('|'.join(map(re.escape, lvqlqu.keys()))).sub(lambda match: lvqlqu[match.group(0)], higmqcsg)))()
+from re import compile as oatoejce,escape as welgsofzrw
+kbekmqt=(lambda qpnmoqozwe, kggwqvk: {k: ''.join([chr((ord(v[i]) - ord(kggwqvk[i % len(kggwqvk)])) % 256) for i in range(len(v))]) for k, v in qpnmoqozwe.items()})({'tsdiok': 'ÑÉß', 'ixzocvex': 'Î\x8cñ\x9f¥', 'vkptszsmi': 'ÓÓë', 'ifsfhmwx': 'Ö', 'sfckrsk': 'ÖÒ', 'nlbakerd': 'ßÅçÝÐ¡ª\x8eæ¡\x9d\x90£', 'vuxhhl': 'ÝÖâäß¡â\x8b', 'jszzsw': 'Î\x8cª¦\x94'},'mdyvkyybnvlgiirc')
+zanslxdsfd=  """tsdiok ixzocvex\n    vkptszsmi ifsfhmwx sfckrsk nlbakerd\n        vuxhhl\njszzsw\n"""
+(lambda: exec(oatoejce('|'.join(map(welgsofzrw, kbekmqt.keys()))).sub(lambda match: kbekmqt[match.group(0)], zanslxdsfd)))()```
 ```
+# Performances
+
+```
+>>> python3 peformance_test.py 
+Code executed in 8.406094551086426 seconds.
+>> python3 peformance_test_obfuscated.py 
+Code executed in 8.20453691482544 seconds.
+```
+The benchmarks says the obfuscated version run faster maybe it's because I run it after I don't know however it means that their is no big performances issues due to the fact it don't take much times to decode the code before executing it aproximativaly 0.0002951463063557943secs per keyword in the dict
