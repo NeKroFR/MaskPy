@@ -3,6 +3,12 @@
 MaskPy is a python code obfuscator made in python.
 
 You can find the desobfuscator [here](https://github.com/NeKroFR/Maskpy-was-a-joke).
+
+# ⚠️ Disclaimer ⚠️
+This version of MaskPy is not secure and is easy to reverse.
+For a more robust and secure obfuscator, please check out at [MaskPy2](https://github.com/NeKroFR/Maskpy2).
+
+
 # Installation
 
 ```
